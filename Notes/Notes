@@ -1,0 +1,62 @@
+//
+//  ViewController.swift
+//  Practice1
+//
+//  Created by Batuhan BARAN on 19.08.2021.
+//
+
+import UIKit
+import RxSwift
+import RxCocoa
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var input: UITextField!
+    @IBOutlet weak var submitButton: UIButton!
+    
+    var inputSubject = BehaviorRelay<String?>(value: "")
+    let disposeBag = DisposeBag()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//        input.rx
+//            .controlEvent(UIControl.Event.editingChanged)
+//            .withLatestFrom(input.rx.text.orEmpty)
+//            .subscribe { text in
+//                self.result.text = "\(text.map({ $0.count > 4 }))"
+//            }
+//            .disposed(by: disposeBag)
+        setupBindings()
+        
+    }
+
+    func setupBindings() {
+        // bind textfield value to emailSubject
+        // then dispose in disposeBag (created at step 3)
+        input.rx.text
+            .bind(to: inputSubject)
+            .disposed(by: disposeBag)
+        
+        // 5
+        inputSubject.map { $0!.validateEmail() }
+            .subscribe(onNext: { isEnabled in
+                if isEnabled {
+                    self.submitButton.alpha = 1
+                    self.submitButton.isEnabled = true
+                }else {
+                    self.submitButton.alpha = 0.4
+                    self.submitButton.isEnabled = false
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension String {
+    func validateEmail() -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+        return predicate.evaluate(with: self)
+    }
+}
