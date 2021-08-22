@@ -12,7 +12,6 @@ import RxCocoa
 class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var totalLabel: UILabel!
     private var viewModel: ProductListViewModel? = ProductListViewModel()
     let disposeBag = DisposeBag()
     
@@ -31,68 +30,29 @@ class ViewController: UIViewController {
             cell.selectionStyle = .none
             cell.productName.text = item.name
             cell.productIcon.image = item.image
-            cell.productPrice.text = "Unit price is " + String(item.price).replacingOccurrences(of: ".", with: ",") + " ₺"
-            cell.delegate = self
-            cell.index = row
-            item.amount.bind { val in
-                cell.productAmount.text = String(val)
-            }.disposed(by: self.disposeBag)
+            cell.productPrice.text = "$" + String(item.price).replacingOccurrences(of: ".", with: ",")
             
         }.disposed(by: disposeBag)
         
-        viewModel?.totalAmount.bind(onNext: { total in
-            if total != 0.0 {
-                self.totalLabel.text = "Total price is \(String(format: "%.2f", total).replacingOccurrences(of: ".", with: ",")) ₺"
-            }else {
-                self.totalLabel.text = ""
-            }
-        })
-        .disposed(by: disposeBag)
+        tableView.rx.modelSelected(Product.self).bind { selectedItem in
+            guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "detailVC") as? ProductDetailViewController
+            else { return }
+            detailVC.selectedProduct = selectedItem
+            detailVC.viewModel = self.viewModel
+            self.present(detailVC, animated: true)
+        }.disposed(by: disposeBag)
         
-        viewModel?.fetchProducts()
-        viewModel?.calculateTotalAmount()
+        viewModel?.addToCart()
     }
     
     private func configureNavBar() {
-        self.title = "Cart"
-        let barButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(barButtonAction))
-        self.navigationItem.rightBarButtonItem = barButton
-        viewModel?.trashButtonState.bind(to: barButton.rx.isEnabled)
-            .disposed(by: disposeBag)
+        self.navigationController?.navigationBar.topItem?.title = "Products"
     }
     
-    @objc func barButtonAction() {
-        viewModel?.publishedProducts.onNext([])
-        viewModel?.totalAmount.accept(0.0)
-        viewModel?.trashButtonState.accept(false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.viewModel?.fetchProducts()
-            self.viewModel?.calculateTotalAmount()
-            self.viewModel?.trashButtonState.accept(true)
-        }
+    @IBAction func cartButtonAction(_ sender: Any) {
+        guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "detailVC") as? ProductDetailViewController
+        else { return }
+        self.present(detailVC, animated: true)
     }
-}
 
-extension ViewController: CustomTableViewCellOutputDelegate {
-    func didTapIncreaseButton(amount: String, index: Int) {
-        var value = 0
-        value += 1
-        if let viewModel = viewModel {
-            viewModel.products[index].amount.accept(viewModel.products[index].amount.value + value)
-            viewModel.total += Double(viewModel.products[index].price)
-            viewModel.totalAmount.accept(viewModel.total)
-        }
-    }
-    
-    func didTapDecreaseButton(amount: String, index: Int) {
-        var value = 0
-        value += 1
-        if let viewModel = viewModel {
-            if viewModel.products[index].amount.value != 1 {
-                viewModel.products[index].amount.accept(viewModel.products[index].amount.value - value)
-                viewModel.total -= Double(viewModel.products[index].price)
-                viewModel.totalAmount.accept(viewModel.total)
-            }
-        }
-    }
 }

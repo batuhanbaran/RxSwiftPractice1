@@ -20,6 +20,8 @@
 		D86A802026CED3730067A4A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D86A801E26CED3730067A4A6 /* LaunchScreen.storyboard */; };
 		D86A802B26CED3730067A4A6 /* Practice1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86A802A26CED3730067A4A6 /* Practice1Tests.swift */; };
 		D86A803626CED3740067A4A6 /* Practice1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86A803526CED3740067A4A6 /* Practice1UITests.swift */; };
+		D8C328F626D2BB7300ECDE68 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C328F526D2BB7300ECDE68 /* CartViewController.swift */; };
+		D8C328FD26D2D08900ECDE68 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C328FC26D2D08900ECDE68 /* ProductDetailViewController.swift */; };
 		DDDF56ADD8C8930166E82332 /* Pods_Practice1Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F62B67F33D2E0E58FFEEB88 /* Pods_Practice1Tests.framework */; };
 		EEC5151D2DE21265FDD80924 /* Pods_Practice1_Practice1UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF44D49A1F99E927023680A /* Pods_Practice1_Practice1UITests.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		D86A803126CED3740067A4A6 /* Practice1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Practice1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86A803526CED3740067A4A6 /* Practice1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice1UITests.swift; sourceTree = "<group>"; };
 		D86A803726CED3740067A4A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8C328F526D2BB7300ECDE68 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		D8C328FC26D2D08900ECDE68 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		E09A13000192742C472CC17A /* Pods-Practice1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Practice1.release.xcconfig"; path = "Target Support Files/Pods-Practice1/Pods-Practice1.release.xcconfig"; sourceTree = "<group>"; };
 		FBF44D49A1F99E927023680A /* Pods_Practice1_Practice1UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Practice1_Practice1UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -161,7 +165,9 @@
 				D86A801726CED3730067A4A6 /* ViewController.swift */,
 				D80E1EF126CFC4A00052E1A3 /* Product.swift */,
 				D80E1EF326CFC4B50052E1A3 /* ProductListViewModel.swift */,
+				D8C328FC26D2D08900ECDE68 /* ProductDetailViewController.swift */,
 				D80E1EEF26CFC41B0052E1A3 /* CustomTableViewCell.swift */,
+				D8C328F526D2BB7300ECDE68 /* CartViewController.swift */,
 				D86A801926CED3730067A4A6 /* Main.storyboard */,
 				D86A801C26CED3730067A4A6 /* Assets.xcassets */,
 				D86A801E26CED3730067A4A6 /* LaunchScreen.storyboard */,
@@ -429,8 +435,10 @@
 			files = (
 				D86A801826CED3730067A4A6 /* ViewController.swift in Sources */,
 				D86A801426CED3730067A4A6 /* AppDelegate.swift in Sources */,
+				D8C328F626D2BB7300ECDE68 /* CartViewController.swift in Sources */,
 				D80E1EF426CFC4B50052E1A3 /* ProductListViewModel.swift in Sources */,
 				D80E1EF226CFC4A00052E1A3 /* Product.swift in Sources */,
+				D8C328FD26D2D08900ECDE68 /* ProductDetailViewController.swift in Sources */,
 				D80E1EF026CFC41B0052E1A3 /* CustomTableViewCell.swift in Sources */,
 				D86A801626CED3730067A4A6 /* SceneDelegate.swift in Sources */,
 			);
