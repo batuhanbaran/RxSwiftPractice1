@@ -13,10 +13,17 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     private var viewModel: ProductListViewModel? = ProductListViewModel()
+    private var cartViewModel: CartViewModel? = CartViewModel()
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let navController = self.tabBarController?.viewControllers![1] as? UINavigationController {
+            let vc = navController.topViewController as! CartViewController
+            vc.viewModel = self.cartViewModel
+        }
+        
         
         configureNavBar()
         setupBindings()
@@ -39,10 +46,11 @@ class ViewController: UIViewController {
             else { return }
             detailVC.selectedProduct = selectedItem
             detailVC.viewModel = self.viewModel
+            detailVC.cartViewModel = self.cartViewModel
             self.present(detailVC, animated: true)
         }.disposed(by: disposeBag)
         
-        viewModel?.addToCart()
+        viewModel?.fetchProducts()
     }
     
     private func configureNavBar() {

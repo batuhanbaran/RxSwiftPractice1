@@ -26,7 +26,7 @@ final class ProductListViewModel {
         Product(image: UIImage(named: "cake")!, name: "Chocolate Cake", amount: BehaviorRelay<Int>.init(value: 1), price: 14.75),
     ]
     
-    func addToCart() {
+    func fetchProducts() {
         publishedProducts.onNext(products)
     }
     

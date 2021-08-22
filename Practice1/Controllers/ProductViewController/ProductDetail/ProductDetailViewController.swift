@@ -17,6 +17,7 @@ class ProductDetailViewController: UIViewController {
     
     var selectedProduct: Product?
     var viewModel: ProductListViewModel?
+    var cartViewModel: CartViewModel? = CartViewModel()
     let disposeBag = DisposeBag()
     var value = 1
     var newPrice = 0.0
@@ -47,7 +48,11 @@ class ProductDetailViewController: UIViewController {
     }
     
     @IBAction func addToCart(_ sender: Any) {
-        
+        guard let product = self.selectedProduct else {
+            return
+        }
+        cartViewModel?.addToCart(product: Product(image: product.image, name: product.name, amount: product.amount, price: product.price))
+        self.dismiss(animated: true)
     }
     
     @IBAction func increaseButtonAction(_ sender: Any) {
