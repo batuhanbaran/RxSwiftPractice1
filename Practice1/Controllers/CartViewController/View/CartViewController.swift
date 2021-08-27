@@ -30,16 +30,28 @@ class CartViewController: UIViewController {
             cell.selectionStyle = .none
             cell.productName.text = item.name
             cell.productIcon.image = item.image
-            cell.productPrice.text = "$" + String(item.price).replacingOccurrences(of: ".", with: ",")
+            cell.productAmount.text = String(item.amount.value)
+            cell.productPrice.text = "$" + String(format: "%.2f", item.price)
             
         }.disposed(by: disposeBag)
+        
+        viewModel?.total.bind(onNext: { total in
+            self.totalLabel.text = "Total Price " + "$" + String(format: "%.2f", total)
+        })
+        .disposed(by: disposeBag)
+        
+        tableView.rx.itemDeleted
+            .subscribe { [unowned self] indexPath in
+                self.viewModel?.removeItem(at: indexPath.row)
+            }
+            .disposed(by: disposeBag)
+
         
         viewModel?.fetchCartItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.fetchCartItems()
     }
 
 }

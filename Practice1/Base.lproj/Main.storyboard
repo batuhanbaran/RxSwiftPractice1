@@ -124,7 +124,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38j-3m-sAc">
-                                <rect key="frame" x="22" y="812" width="370" height="50"/>
+                                <rect key="frame" x="22" y="787" width="370" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lvb-79-I2S"/>
@@ -153,6 +153,9 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Hw-4t-SKL">
                                         <rect key="frame" x="47" y="0.0" width="8" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="8" id="m3I-on-vgJ"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -169,6 +172,10 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="3iv-Zf-VHQ"/>
+                                    <constraint firstAttribute="width" constant="102" id="rc1-Sq-mO4"/>
+                                </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lPX-tP-nVW">
                                 <rect key="frame" x="22" y="501" width="370" height="45"/>
@@ -185,15 +192,14 @@
                         <constraints>
                             <constraint firstItem="Id9-7P-3IV" firstAttribute="top" secondItem="QC2-Ni-rJL" secondAttribute="top" constant="85" id="44w-44-JM5"/>
                             <constraint firstItem="lPX-tP-nVW" firstAttribute="leading" secondItem="QC2-Ni-rJL" secondAttribute="leading" constant="22" id="AGg-gJ-3lZ"/>
+                            <constraint firstItem="lPX-tP-nVW" firstAttribute="top" secondItem="3pl-hs-6sQ" secondAttribute="bottom" constant="84" id="B24-j8-2b4"/>
                             <constraint firstItem="38j-3m-sAc" firstAttribute="leading" secondItem="QC2-Ni-rJL" secondAttribute="leading" constant="22" id="C7L-ZT-F2q"/>
                             <constraint firstItem="QC2-Ni-rJL" firstAttribute="trailing" secondItem="lPX-tP-nVW" secondAttribute="trailing" constant="22" id="ICR-oX-fg8"/>
+                            <constraint firstItem="3pl-hs-6sQ" firstAttribute="centerX" secondItem="lPX-tP-nVW" secondAttribute="centerX" id="WFq-DY-ezW"/>
+                            <constraint firstItem="3pl-hs-6sQ" firstAttribute="top" secondItem="Id9-7P-3IV" secondAttribute="bottom" constant="106" id="YZG-WA-cuK"/>
                             <constraint firstItem="QC2-Ni-rJL" firstAttribute="trailing" secondItem="38j-3m-sAc" secondAttribute="trailing" constant="22" id="apR-Gb-MqE"/>
                             <constraint firstItem="Id9-7P-3IV" firstAttribute="centerX" secondItem="RUE-vJ-RUM" secondAttribute="centerX" id="bry-Ei-CaD"/>
-                            <constraint firstItem="QC2-Ni-rJL" firstAttribute="trailing" secondItem="3pl-hs-6sQ" secondAttribute="trailing" constant="156" id="djV-kt-rY8"/>
-                            <constraint firstItem="3pl-hs-6sQ" firstAttribute="leading" secondItem="QC2-Ni-rJL" secondAttribute="leading" constant="156" id="dpQ-9u-FmL"/>
-                            <constraint firstItem="3pl-hs-6sQ" firstAttribute="top" secondItem="Id9-7P-3IV" secondAttribute="bottom" constant="106" id="h4J-lM-DNc"/>
-                            <constraint firstItem="QC2-Ni-rJL" firstAttribute="bottom" secondItem="38j-3m-sAc" secondAttribute="bottom" id="x8G-8E-pcH"/>
-                            <constraint firstItem="lPX-tP-nVW" firstAttribute="top" secondItem="3pl-hs-6sQ" secondAttribute="bottom" constant="84" id="zRy-Qc-mvN"/>
+                            <constraint firstItem="QC2-Ni-rJL" firstAttribute="bottom" secondItem="38j-3m-sAc" secondAttribute="bottom" constant="25" id="x8G-8E-pcH"/>
                         </constraints>
                     </view>
                     <connections>
@@ -330,6 +336,7 @@
                                             <constraint firstAttribute="trailing" secondItem="lYk-E4-bhN" secondAttribute="trailing" constant="22" id="yki-rT-RGs"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="productAmount" destination="nlb-Fn-DxD" id="eMG-Wx-Dga"/>
                                             <outlet property="productIcon" destination="n0k-s3-2fl" id="wtP-G9-Zfz"/>
                                             <outlet property="productName" destination="lYk-E4-bhN" id="ayb-0d-mzy"/>
                                             <outlet property="productPrice" destination="LRq-Vt-MA4" id="bGs-Jj-Uic"/>

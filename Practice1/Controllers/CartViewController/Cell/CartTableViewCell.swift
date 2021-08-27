@@ -19,6 +19,7 @@ class CartTableViewCell: UITableViewCell {
     @IBOutlet weak var productIcon: UIImageView!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productName: UILabel!
+    @IBOutlet weak var productAmount: UILabel!
     
     weak var delegate: CustomTableViewCellOutputDelegate?
     lazy var index = 0

@@ -37,7 +37,6 @@ class ProductDetailViewController: UIViewController {
             self.productPrice.text = "$" + String(format: "%.2f",  self.newPrice)
         })
         .disposed(by: disposeBag)
-        
     }
     
     private func configureUI() {
@@ -48,10 +47,10 @@ class ProductDetailViewController: UIViewController {
     }
     
     @IBAction func addToCart(_ sender: Any) {
-        guard let product = self.selectedProduct else {
+        guard let product = selectedProduct else {
             return
         }
-        cartViewModel?.addToCart(product: Product(image: product.image, name: product.name, amount: product.amount, price: product.price))
+        cartViewModel?.addToCart(product: Product(image: product.image, name: product.name, amount: product.amount, price: newPrice))
         self.dismiss(animated: true)
     }
     
