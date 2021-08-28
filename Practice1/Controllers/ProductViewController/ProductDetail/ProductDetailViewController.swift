@@ -50,7 +50,7 @@ class ProductDetailViewController: UIViewController {
         guard let product = selectedProduct else {
             return
         }
-        cartViewModel?.addToCart(product: Product(image: product.image, name: product.name, amount: product.amount, price: newPrice))
+        cartViewModel?.addToCart(product: Product(image: product.image, name: product.name, amount: product.amount, price: product.price))
         self.dismiss(animated: true)
     }
     

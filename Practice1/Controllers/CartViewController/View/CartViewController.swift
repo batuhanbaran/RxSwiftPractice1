@@ -27,13 +27,13 @@ class CartViewController: UIViewController {
         self.tableView.rowHeight = 154
         self.tableView.tableFooterView = UIView(frame: .zero)
         
-        viewModel?.publishedCartItems.bind(to: tableView.rx.items(cellIdentifier: CartTableViewCell.identifier, cellType: CartTableViewCell.self)) { row, item, cell in
+        viewModel?.publishedCartItems.bind(to: tableView.rx.items(cellIdentifier: CartTableViewCell.identifier, cellType: CartTableViewCell.self)) { index, item, cell in
             cell.selectionStyle = .none
-            cell.productName.text = item.name
-            cell.productIcon.image = item.image
-            cell.productAmount.text = String(item.amount.value)
-            cell.productPrice.text = "$" + String(format: "%.2f", item.price)
-            
+            guard let product = self.viewModel?.products[index] else {
+                return
+            }
+            cell.configure(with: product, at: index)
+            cell.delegate = self
         }.disposed(by: disposeBag)
         
         viewModel?.total
@@ -51,6 +51,7 @@ class CartViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel?.fetchCartItems()
+        viewModel?.calculateTotalPrice()
     }
     
     private func configureNavBar() {
@@ -67,14 +68,26 @@ class CartViewController: UIViewController {
     }
     
     @objc func deleteItems() {
-        let alert = UIAlertController(title: "Uyarı", message: "Sepetinizi boşaltmak istediğinize emin misiniz?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Evet", style: .default, handler: { action in
+        let alert = UIAlertController(title: "Warning ⚠️", message: "Are you sure you want to empty your cart?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             self.viewModel?.publishedCartItems.onNext([])
+            self.viewModel?.products.removeAll(keepingCapacity: false)
             self.viewModel?.total.accept(0.0)
             self.viewModel?.isCartEmpty.accept(false)
         }))
-        alert.addAction(UIAlertAction(title: "Hayır", style: .destructive, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+}
 
+extension CartViewController: CartTableViewCellOutputDelegate {
+    func didTapIncreaseButton(amount: Int, index: Int) {
+        self.viewModel?.products[index].amount.accept(amount)
+        self.viewModel?.calculateTotalPrice()
+    }
+    
+    func didTapDecreaseButton(amount: Int, index: Int) {
+        self.viewModel?.products[index].amount.accept(amount)
+        self.viewModel?.calculateTotalPrice()
+    }
 }

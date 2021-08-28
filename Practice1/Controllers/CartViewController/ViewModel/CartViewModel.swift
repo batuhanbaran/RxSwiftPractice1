@@ -34,5 +34,17 @@ final class CartViewModel {
         products.remove(at: index)
         total.accept(totalPrice)
         publishedCartItems.onNext(products)
+        self.calculateTotalPrice()
+        if products.isEmpty {
+            isCartEmpty.accept(true)
+        }
+    }
+    
+    func calculateTotalPrice() {
+        totalPrice = 0.0
+        for product in products {
+            totalPrice += product.price * Double(product.amount.value)
+        }
+        total.accept(totalPrice)
     }
 }
