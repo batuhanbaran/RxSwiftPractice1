@@ -15,12 +15,14 @@ final class CartViewModel {
     var products: [Product] = []
     var totalPrice = 0.0
     var total = BehaviorRelay<Double>(value: 0.0)
+    var isCartEmpty = BehaviorRelay<Bool>(value: false)
     
     func addToCart(product: Product) {
         products.append(product)
         totalPrice += product.price
-        publishedCartItems.onNext(products)
         total.accept(totalPrice)
+        isCartEmpty.accept(true)
+        publishedCartItems.onNext(products)
     }
     
     func fetchCartItems() {

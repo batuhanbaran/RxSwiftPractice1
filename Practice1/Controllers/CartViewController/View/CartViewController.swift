@@ -19,6 +19,7 @@ class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavBar()
         setupBindings()
     }
     
@@ -35,23 +36,45 @@ class CartViewController: UIViewController {
             
         }.disposed(by: disposeBag)
         
-        viewModel?.total.bind(onNext: { total in
-            self.totalLabel.text = "Total Price " + "$" + String(format: "%.2f", total)
-        })
-        .disposed(by: disposeBag)
+        viewModel?.total
+            .asObservable()
+            .map { total -> String in
+                return (total != 0.0) ? "Total Price " + String(format: "%.2f", total) : ""
+            }
+            .bind(to:self.totalLabel.rx.text)
+            .disposed(by:self.disposeBag)
         
         tableView.rx.itemDeleted
             .subscribe { [unowned self] indexPath in
                 self.viewModel?.removeItem(at: indexPath.row)
             }
             .disposed(by: disposeBag)
-
         
         viewModel?.fetchCartItems()
     }
     
+    private func configureNavBar() {
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteItems))
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationController?.navigationBar.topItem?.title = "Cart"
+        viewModel?.isCartEmpty
+            .bind(to: rightBarButtonItem.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    @objc func deleteItems() {
+        let alert = UIAlertController(title: "Uyarı", message: "Sepetinizi boşaltmak istediğinize emin misiniz?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Evet", style: .default, handler: { action in
+            self.viewModel?.publishedCartItems.onNext([])
+            self.viewModel?.total.accept(0.0)
+            self.viewModel?.isCartEmpty.accept(false)
+        }))
+        alert.addAction(UIAlertAction(title: "Hayır", style: .destructive, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
