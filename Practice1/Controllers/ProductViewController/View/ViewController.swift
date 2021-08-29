@@ -24,7 +24,6 @@ class ViewController: UIViewController {
             vc.viewModel = self.cartViewModel
         }
         
-        
         configureNavBar()
         setupBindings()
     }
